@@ -4,42 +4,42 @@ document.addEventListener('DOMContentLoaded', function () {
     var backgroundcolor;
     var color;
     for (let i = 0; i < 64; i++) {
+        //zeilencounter
+        if (i % 8 == 0) {
+            row = row + 1;
+        }
         //gerade zeilen
         if (row % 2 == 0) {
             //wei�
             if (i % 2 == 0) {
-                backgroundcolor = "FFFFFF";
-                color = "000000";
+                backgroundcolor = "#FFFFFF";
+                color = "#000000";
             }
             else {
                 backgroundcolor = "#000000";
-                color = "FFFFFF";
+                color = "#FFFFFF";
             }
         }
         else {
             //schwarz
             if (i % 2 == 0) {
                 backgroundcolor = "#000000";
-                color = "FFFFFF";
+                color = "#FFFFFF";
             }
             else {
                 backgroundcolor = "#FFFFFF";
-                color = "000000";
+                color = "#000000";
             }
         }
-        //zeilencounter
-        if (i % 8 == 0) {
-            row = row + 1;
-        }
         //div erstellen
-        placeDiv(color);
+        placeDiv(color, backgroundcolor);
         //Reisk�rner vermehren
         rice = rice * 2;
     }
-    function placeDiv(color) {
+    function placeDiv(color, backgroundcolor) {
         let div = document.createElement("div");
-        document.body.appendChild(div);
         div.textContent = rice.toString();
+        document.body.appendChild(div);
         let s = div.style;
         s.backgroundColor = backgroundcolor;
         s.color = color;
