@@ -13,9 +13,17 @@ body{
 	width: 800px;
 }
 
+.black {
+	background: black;
+	color: white;
+}
+
+.white {
+	background: white;
+	color: black;
+}
+
 .selected{
 	background-color: red;
 }
-.notselected{
-	
-}
+
