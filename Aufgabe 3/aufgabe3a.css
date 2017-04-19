@@ -24,6 +24,15 @@ body{
 }
 
 .selected{
-	background-color: red;
+	background-color: #ff66ff;
 }
-
+#sum{
+	padding: 0.5em;
+	color: #000000;
+	position: absolute;
+	border: solid 2px #000000;
+	background-color: #FFFFFF;
+	height: 80px;
+	width: 150px;
+	text-align: center;
+}

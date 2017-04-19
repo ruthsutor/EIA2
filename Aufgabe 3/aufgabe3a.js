@@ -50,15 +50,26 @@ document.addEventListener('DOMContentLoaded', function () {
         s.height = "100px";
     }
     //Aufgabe 3a
+    //Farbe auf Klick ver�ndern
     function selection(_event) {
         let select = _event.target;
         select.classList.toggle("selected");
-        /*if (felder.style.backgroundColor = "#FFFFFF" || "#000000"){
-            felder.className = "selected";
+        //Summe der Reisk�rner
+        let sum = 0;
+        let selectedfelder = document.getElementsByClassName("selected");
+        let sumDiv = document.getElementById("sum");
+        addToSum(_event);
+        function addToSum(_event) {
+            for (let i = 0; i < selectedfelder.length; i++) {
+                sum += parseInt(selectedfelder[i].textContent); //parseInt wandelt in number um  
+                sumDiv.textContent = "Dezimal: " + sum.toString() + "\r\n" + "Hexadezimal: " + sum.toString(16);
+                console.log(sum);
             }
-        if (felder.style.backgroundColor = "red"){
-            felder.className = "notselected";
-           }*/
+        }
     }
+    document.addEventListener("mousemove", function (Event) {
+        document.getElementById("sum").style.left = (Event.clientX + 10) + "px";
+        document.getElementById("sum").style.top = (Event.clientY + 10) + "px";
+    });
 });
 //# sourceMappingURL=aufgabe3a.js.map

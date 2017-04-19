@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var ablage = [];
     var stapelkarten = karten.length;
     var handkarten = 0;
-    document.getElementById("stapel").addEventListener("click", function () {
+    document.getElementById("stapel").addEventListener("click", newCard);
+    function newCard() {
         if (stapelkarten > 0 && handkarten < 5) {
             var zufall = Math.floor((Math.random() * stapelkarten) + 0); //Zufallsgenerator
             var gezogen = karten[zufall]; //die gezogene Karte
@@ -16,25 +17,31 @@ document.addEventListener('DOMContentLoaded', function () {
             let div = document.createElement("div"); //Handkarte erstellen
             document.getElementById("hand").appendChild(div);
             div.textContent = gezogen;
-            div.style.width = "200px";
-            div.style.height = "300px";
+            div.style.width = "100px";
+            div.style.height = "150px";
             div.style.marginRight = "20px";
             div.style.cssFloat = "left";
             div.style.border = "2px #000000 solid";
             div.style.textAlign = "center";
             div.style.display = "inline";
             hand.push(karten[zufall]); //gezogene Karte wird Hand Array hinzugef�gt
-            div.addEventListener("click", function () {
-                for (let i = 0; i < hand.length; i++) {
-                    if (this.textContent == hand[i]) {
-                        handkarten = handkarten - 1;
-                        ablage.push(hand[i]); //Karte wird Ablage Array hinzugef�gt
-                        hand.splice(i, 1); //und aus Hand Array entfernt
-                    }
-                }
-                document.getElementById("ablage").textContent = ablage[ablage.length]; //Letztes Element des Ablage Arrays wird gezeigt
-            });
+            div.addEventListener("click", toAblage);
         }
-    });
+        if (stapelkarten == 0) {
+            document.getElementById("stapel").textContent = "Karten leer";
+        }
+    }
+    function toAblage(_event) {
+        let choosenCard = _event.target;
+        choosenCard.parentNode.removeChild(choosenCard); //erstelltes Div l�schen
+        handkarten = handkarten - 1;
+        document.getElementById("ablage").textContent = choosenCard.textContent;
+        for (let i = 0; i < hand.length; i++) {
+            if (choosenCard.textContent == hand[i]) {
+                ablage.push(hand[i]); // f�gt die Karte dem Ablage Array hinzu
+                hand.splice(i, 1); // entfernt die Karte aus dem Array
+            }
+        }
+    }
 });
 //# sourceMappingURL=aufgabe3b.js.map

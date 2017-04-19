@@ -58,26 +58,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (i < 8)
             div.addEventListener("click", selection);
-        
+
         let s: CSSStyleDeclaration = div.style;
         div.classList.toggle(klasse);
         s.width = "100px";
         s.height = "100px";
     }
 
-
     //Aufgabe 3a
 
-   
+    //Farbe auf Klick verändern
     function selection(_event: MouseEvent): void {
         let select: HTMLElement = <HTMLElement>_event.target;
-
         select.classList.toggle("selected");
-        /*if (felder.style.backgroundColor = "#FFFFFF" || "#000000"){
-            felder.className = "selected";
+
+        //Summe der Reiskörner
+        let sum: number = 0;
+        let selectedfelder: NodeListOf<Element> = document.getElementsByClassName("selected");
+        let sumDiv: HTMLElement = document.getElementById("sum");
+        addToSum(_event);
+
+        function addToSum(_event: MouseEvent): void {
+            for (let i: number = 0; i < selectedfelder.length; i++) {
+                sum += parseInt(selectedfelder[i].textContent); //parseInt wandelt in number um  
+                sumDiv.textContent = "Dezimal: " + sum.toString() +"\r\n" + "Hexadezimal: " + sum.toString(16);
+                console.log(sum);
             }
-        if (felder.style.backgroundColor = "red"){
-            felder.className = "notselected";
-           }*/
-    }
+        }
+    } 
+    document.addEventListener("mousemove", function(Event) {
+            document.getElementById("sum").style.left = (Event.clientX + 10) + "px";
+            document.getElementById("sum").style.top = (Event.clientY + 10) + "px";
+        });
 });
