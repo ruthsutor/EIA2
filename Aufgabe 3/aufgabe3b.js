@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
         "Pik 7", "Pik 8", "Pik 9", "Pik 10", "Pik Bube", "Pik Dame", "Pik K�nig", "Pik As",
         "Karo 7", "Karo 8", "Karo 9", "Karo 10", "Karo Bube", "Karo Dame", "Karo K�nig", "Karo As"];
     var hand = [];
-    var ablage = [];
     var stapelkarten = karten.length;
     var handkarten = 0;
     document.getElementById("stapel").addEventListener("click", newCard);
@@ -38,7 +37,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById("ablage").textContent = choosenCard.textContent;
         for (let i = 0; i < hand.length; i++) {
             if (choosenCard.textContent == hand[i]) {
-                ablage.push(hand[i]); // f�gt die Karte dem Ablage Array hinzu
                 hand.splice(i, 1); // entfernt die Karte aus dem Array
             }
         }
