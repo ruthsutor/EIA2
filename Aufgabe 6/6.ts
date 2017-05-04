@@ -1,9 +1,8 @@
-
 /*  
-Aufgabe: Aufgabe 5
+Aufgabe: Aufgabe 6a
 Name: Ruth Sutor
 Matrikel: 254899
-Datum: 26/04/2017
+Datum: 4/05/2017
 Hiermit versichere ich, dass ich diesen
 Code selbst geschrieben habe. Er wurde
 nicht kopiert und auch nicht diktiert.
@@ -11,8 +10,13 @@ nicht kopiert und auch nicht diktiert.
 namespace Blumenwiese {
     window.addEventListener("load", init);
     let leinwand: CanvasRenderingContext2D;
-    let x: number[] = [];
-    let y: number[] = [];
+    interface Beedata {
+        xposition: number;
+        yposition: number;
+        big: boolean;
+        color: string;
+    }
+    let allBees: Beedata[] = [];
     let getImage: ImageData;
     function init(_event: Event): void {
         let canvas: HTMLCanvasElement;
@@ -20,52 +24,98 @@ namespace Blumenwiese {
         leinwand = canvas.getContext("2d");
         drawImage();
         getImage = leinwand.getImageData(0, 0, 400, 260);
-        draw10Bees();
-        document.getElementsByTagName("canvas")[0].addEventListener("click", drawNewBee);
+        create10Bees();
+        document.getElementsByTagName("canvas")[0].addEventListener("click", createNewBee);
         setTimeout(animateBees, 100);
 
     }
-    function draw10Bees(): void {
+    function create10Bees(): void {
         for (let i: number = 0; i < 9; i++) {
-            x.push(320);
-            y.push(115);
-            drawBee(x[i], y[i]);
+            createNewBee();
         }
     }
-    function drawNewBee(): void {
-        x.push(320);
-        y.push(115);
-        drawBee(320, 115);
+    function createNewBee(): void {
+        let b: boolean;
+        let random: number = Math.round(Math.random());
+        if (random == 1) {
+            b = true;
+        }
+        if (random == 0) {
+            b = false;
+        }
+        let c: string;
+        let random2: number = Math.round(Math.random());
+        if (random2 == 1) {
+            c = "#ffff1a";
+        }
+        if (random2 == 0) {
+            c = "#ff6600";
+        }
+        let bee: Beedata = { xposition: 320, yposition: 115, big: b, color: c };
+        allBees.push(bee);
+        drawBee(320, 115, b, c);
     }
     function animateBees(): void {
-        leinwand.putImageData(getImage, 0, 0);
-        for (let i: number = 0; i < x.length - 1; i++) {
+        leinwand.putImageData(getImage, 0, 0); 
+        for (let i: number = 0; i < allBees.length - 1; i++) {
             let zufallX: number = Math.round(Math.random() * 6);
-            x[i] += (zufallX - 4); //-4 für Wind
+            allBees[i].xposition += (zufallX - 4); //-4 für Wind
             let zufallY: number = Math.round(Math.random() * 6);
             if (zufallY > 3) {
-                y[i] += zufallY;
+                allBees[i].yposition += zufallY;
             }
             if ((zufallY < 3) || (zufallY == 3)) {
-                y[i] -= zufallY;
+                allBees[i].yposition -= zufallY;
             }
-            if (x[i] < 0) {
-                x[i] = 400;
+            if (allBees[i].xposition < 0) {
+                allBees[i].xposition = 400;
             }
-            if (x[i] > 400) {
-                x[i] = 0;
+            if (allBees[i].xposition > 400) {
+                allBees[i].xposition = 0;
             }
-            if (y[i] > 260) {
-                y[i] = 0;
+            if (allBees[i].yposition > 260) {
+                allBees[i].yposition = 0;
             }
-            if (y[i] < 0) {
-                y[i] = 260;
+            if (allBees[i].yposition < 0) {
+                allBees[i].yposition = 260;
             }
-            drawBee(x[i], y[i]);
+            drawBee(allBees[i].xposition, allBees[i].yposition, allBees[i].big, allBees[i].color);
         }
 
         setTimeout(animateBees, 100);
     }
+
+    function drawBee(_x: number, _y: number, _big: boolean, _color: string): void {
+        if (_big == false) {
+            leinwand.beginPath();
+            leinwand.arc(_x, _y, 1, 0, 2 * Math.PI);
+            leinwand.closePath();
+            leinwand.fillStyle = "#000000";
+            leinwand.fill();
+            leinwand.beginPath();
+            leinwand.arc(_x + 1, _y, 1, 0, 2 * Math.PI);
+            leinwand.closePath();
+            leinwand.fillStyle = "#000000";
+            leinwand.fill();
+            leinwand.fillStyle = _color;
+            leinwand.fillRect(_x, _y - 1, 1, 2);
+        }
+        if (_big == true) {
+            leinwand.beginPath();
+            leinwand.arc(_x, _y, 1.5, 0, 2 * Math.PI);
+            leinwand.closePath();
+            leinwand.fillStyle = "#000000";
+            leinwand.fill();
+            leinwand.beginPath();
+            leinwand.arc(_x + 2, _y, 1.5, 0, 2 * Math.PI);
+            leinwand.closePath();
+            leinwand.fillStyle = "#000000";
+            leinwand.fill();
+            leinwand.fillStyle = _color;
+            leinwand.fillRect(_x, _y - 1, 2, 2);
+        }
+    }
+
     function drawImage(): void {
 
         drawSky(0, 0, 400, 260);
@@ -95,21 +145,6 @@ namespace Blumenwiese {
             }
         }
     }
-    function drawBee(_x: number, _y: number): void {
-        leinwand.beginPath();
-        leinwand.arc(_x, _y, 1, 0, 2 * Math.PI);
-        leinwand.closePath();
-        leinwand.fillStyle = "#000000";
-        leinwand.fill();
-        leinwand.beginPath();
-        leinwand.arc(_x + 1, _y, 1, 0, 2 * Math.PI);
-        leinwand.closePath();
-        leinwand.fillStyle = "#000000";
-        leinwand.fill();
-        leinwand.fillStyle = "#ffff00";
-        leinwand.fillRect(_x, _y - 1, 1, 2);
-    }
-
 
     function drawSky(_x: number, _y: number, _width: number, _height: number): void {
         leinwand.fillStyle = "#cce6ff";
