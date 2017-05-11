@@ -11,6 +11,7 @@ namespace Blumenwiese {
     window.addEventListener("load", init);
     export let leinwand: CanvasRenderingContext2D;
     let allBees: Beedata[] = [];
+    export let flowers: FLower[] = [];
     export let getImage: ImageData;
     function init(_event: Event): void {
         let canvas: HTMLCanvasElement;
@@ -32,10 +33,9 @@ namespace Blumenwiese {
         allBees.push(b);
     }
     function animateBees(): void {
-        leinwand.putImageData(getImage, 0, 0); 
+        leinwand.putImageData(getImage, 0, 0);
         for (let i: number = 0; i < allBees.length - 1; i++) {
             allBees[i].move();
-            allBees[i].draw();
         }
         setTimeout(animateBees, 100);
     }

@@ -8,11 +8,79 @@ Code selbst geschrieben habe. Er wurde
 nicht kopiert und auch nicht diktiert.
 */
 namespace Blumenwiese {
+    export class FLower {
+        xposition: number;
+        yposition: number;
+        form: boolean;
+        color: string;
+        //Methoden:
+        constructor() {
+            //Position
+            this.yposition = Math.round((Math.random() * 100) + 160);
+            this.xposition = Math.round((Math.random() * 400) + 0);
+            //Blumensorte
+            let flowerKind: number = Math.round(Math.random());
+            if (flowerKind == 0) {
+                this.form = true;
+            }
+            if (flowerKind == 1) {
+                this.form = false;
+            }
+            //Farbe
+            let c: number = Math.round(Math.random());
+            if (c == 0) {
+                this.color = "#ff99ff";
+            }
+            if (c == 1) {
+                this.color = "#cc66ff";
+            }
+            this.draw();
+        }
+        draw(): void {
+            if (this.form == true) {
+                leinwand.beginPath();
+                leinwand.moveTo(this.xposition, this.yposition);
+                leinwand.quadraticCurveTo(this.xposition, this.yposition - 5, this.xposition + 5, this.yposition);
+                leinwand.quadraticCurveTo(this.xposition + 7.5, this.yposition - 5, this.xposition + 10, this.yposition);
+                leinwand.quadraticCurveTo(this.xposition + 15, this.yposition - 5, this.xposition + 15, this.yposition);
+                leinwand.quadraticCurveTo(this.xposition + 7.5, this.yposition + 15, this.xposition, this.yposition);
+                leinwand.closePath();
+                leinwand.fillStyle = this.color;
+                leinwand.fill();
+                leinwand.beginPath();
+                leinwand.moveTo(this.xposition + 10, this.yposition + 15);
+            }
+            if (this.form == true) {
+                leinwand.beginPath();
+                leinwand.arc(this.xposition + 5, this.yposition, 2.5, 0, 2 * Math.PI);
+                leinwand.arc(this.xposition - 5, this.yposition, 2.5, 0, 2 * Math.PI);
+                leinwand.arc(this.xposition, this.yposition + 5, 2.5, 0, 2 * Math.PI);
+                leinwand.arc(this.xposition, this.yposition - 5, 2.5, 0, 2 * Math.PI);
+                leinwand.closePath();
+                leinwand.fillStyle = this.color;
+                leinwand.fill();
+                leinwand.beginPath();
+                leinwand.arc(this.xposition + 3.5, this.yposition + 3.5, 2.5, 0, 2 * Math.PI);
+                leinwand.arc(this.xposition + 3.5, this.yposition - 3.5, 2.5, 0, 2 * Math.PI);
+                leinwand.arc(this.xposition - 3.5, this.yposition + 3.5, 2.5, 0, 2 * Math.PI);
+                leinwand.arc(this.xposition - 3.5, this.yposition - 3.5, 2.5, 0, 2 * Math.PI);
+                leinwand.closePath();
+                leinwand.fillStyle = this.color;
+                leinwand.fill();
+                leinwand.beginPath();
+                leinwand.arc(this.xposition, this.yposition, 4, 0, 2 * Math.PI);
+                leinwand.closePath();
+                leinwand.fillStyle = "#ffff1a";
+                leinwand.fill();
+            }
+        }
+    }
     export class Beedata {
         xposition: number;
         yposition: number;
         big: boolean;
         color: string;
+        //Methoden:
         constructor() {
             let random: number = Math.round(Math.random());
             if (random == 1) {

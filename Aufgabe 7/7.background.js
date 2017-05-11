@@ -16,27 +16,18 @@ var Blumenwiese;
         drawCloud(300, 70);
         drawTree();
         drawBienenKasten();
-        for (let i = 0; i < 50; i++) {
-            let flowerKind = Math.round(Math.random() * 4);
-            let y = Math.round((Math.random() * 100) + 160);
-            let x = Math.round((Math.random() * 400) + 0);
-            switch (flowerKind) {
-                case 0:
-                    drawFlower1(x, y, "#ff99ff");
-                    break;
-                case 1:
-                    drawFlower1(x, y, "#cc66ff");
-                    break;
-                case 2:
-                    drawFlower2(x, y, "#ff99ff");
-                    break;
-                case 3:
-                    drawFlower2(x, y, "#cc66ff");
-                    break;
-            }
-        }
+        drawFlowers();
     }
     Blumenwiese.drawImage = drawImage;
+    function drawFlowers() {
+        for (let i = 0; i < 50; i++) {
+            let f = new Blumenwiese.FLower();
+            if (i < 6) {
+                Blumenwiese.flowers.push(f);
+            }
+        }
+        console.log(Blumenwiese.flowers);
+    }
     function drawSky(_x, _y, _width, _height) {
         Blumenwiese.leinwand.fillStyle = "#cce6ff";
         Blumenwiese.leinwand.fillRect(_x, _y, _width, _height);
@@ -102,42 +93,6 @@ var Blumenwiese;
         Blumenwiese.leinwand.fillRect(340, 120, 5, 15);
         Blumenwiese.leinwand.fillStyle = "#000000";
         Blumenwiese.leinwand.fillRect(325, 115, 20, 2);
-    }
-    function drawFlower1(_x, _y, _color) {
-        Blumenwiese.leinwand.beginPath();
-        Blumenwiese.leinwand.moveTo(_x, _y);
-        Blumenwiese.leinwand.quadraticCurveTo(_x, _y - 5, _x + 5, _y);
-        Blumenwiese.leinwand.quadraticCurveTo(_x + 7.5, _y - 5, _x + 10, _y);
-        Blumenwiese.leinwand.quadraticCurveTo(_x + 15, _y - 5, _x + 15, _y);
-        Blumenwiese.leinwand.quadraticCurveTo(_x + 7.5, _y + 15, _x, _y);
-        Blumenwiese.leinwand.closePath();
-        Blumenwiese.leinwand.fillStyle = _color;
-        Blumenwiese.leinwand.fill();
-        Blumenwiese.leinwand.beginPath();
-        Blumenwiese.leinwand.moveTo(_x + 10, _y + 15);
-    }
-    function drawFlower2(_x, _y, _color) {
-        Blumenwiese.leinwand.beginPath();
-        Blumenwiese.leinwand.arc(_x + 5, _y, 2.5, 0, 2 * Math.PI);
-        Blumenwiese.leinwand.arc(_x - 5, _y, 2.5, 0, 2 * Math.PI);
-        Blumenwiese.leinwand.arc(_x, _y + 5, 2.5, 0, 2 * Math.PI);
-        Blumenwiese.leinwand.arc(_x, _y - 5, 2.5, 0, 2 * Math.PI);
-        Blumenwiese.leinwand.closePath();
-        Blumenwiese.leinwand.fillStyle = _color;
-        Blumenwiese.leinwand.fill();
-        Blumenwiese.leinwand.beginPath();
-        Blumenwiese.leinwand.arc(_x + 3.5, _y + 3.5, 2.5, 0, 2 * Math.PI);
-        Blumenwiese.leinwand.arc(_x + 3.5, _y - 3.5, 2.5, 0, 2 * Math.PI);
-        Blumenwiese.leinwand.arc(_x - 3.5, _y + 3.5, 2.5, 0, 2 * Math.PI);
-        Blumenwiese.leinwand.arc(_x - 3.5, _y - 3.5, 2.5, 0, 2 * Math.PI);
-        Blumenwiese.leinwand.closePath();
-        Blumenwiese.leinwand.fillStyle = _color;
-        Blumenwiese.leinwand.fill();
-        Blumenwiese.leinwand.beginPath();
-        Blumenwiese.leinwand.arc(_x, _y, 4, 0, 2 * Math.PI);
-        Blumenwiese.leinwand.closePath();
-        Blumenwiese.leinwand.fillStyle = "#ffff1a";
-        Blumenwiese.leinwand.fill();
     }
 })(Blumenwiese || (Blumenwiese = {}));
 //# sourceMappingURL=7.background.js.map

@@ -17,33 +17,22 @@ namespace Blumenwiese {
         drawCloud(300, 70);
         drawTree();
         drawBienenKasten();
+        drawFlowers();
 
+    }
+    function drawFlowers(): void {
         for (let i: number = 0; i < 50; i++) {
-            let flowerKind: number = Math.round(Math.random() * 4);
-            let y: number = Math.round((Math.random() * 100) + 160);
-            let x: number = Math.round((Math.random() * 400) + 0);
-            switch (flowerKind) {
-                case 0:
-                    drawFlower1(x, y, "#ff99ff");
-                    break;
-                case 1:
-                    drawFlower1(x, y, "#cc66ff");
-                    break;
-                case 2:
-                    drawFlower2(x, y, "#ff99ff");
-                    break;
-                case 3:
-                    drawFlower2(x, y, "#cc66ff");
-                    break;
+            let f: FLower = new FLower();
+            if (i < 6) {
+                flowers.push(f);
             }
         }
+        console.log(flowers);
     }
-
     function drawSky(_x: number, _y: number, _width: number, _height: number): void {
         leinwand.fillStyle = "#cce6ff";
         leinwand.fillRect(_x, _y, _width, _height);
     }
-
     function drawGrass(_width: number): void {
         leinwand.beginPath();
         leinwand.moveTo(0, 120);
@@ -105,41 +94,5 @@ namespace Blumenwiese {
         leinwand.fillRect(340, 120, 5, 15);
         leinwand.fillStyle = "#000000";
         leinwand.fillRect(325, 115, 20, 2);
-    }
-    function drawFlower1(_x: number, _y: number, _color: string): void {
-        leinwand.beginPath();
-        leinwand.moveTo(_x, _y);
-        leinwand.quadraticCurveTo(_x, _y - 5, _x + 5, _y);
-        leinwand.quadraticCurveTo(_x + 7.5, _y - 5, _x + 10, _y);
-        leinwand.quadraticCurveTo(_x + 15, _y - 5, _x + 15, _y);
-        leinwand.quadraticCurveTo(_x + 7.5, _y + 15, _x, _y);
-        leinwand.closePath();
-        leinwand.fillStyle = _color;
-        leinwand.fill();
-        leinwand.beginPath();
-        leinwand.moveTo(_x + 10, _y + 15);
-    }
-    function drawFlower2(_x: number, _y: number, _color: string): void {
-        leinwand.beginPath();
-        leinwand.arc(_x + 5, _y, 2.5, 0, 2 * Math.PI);
-        leinwand.arc(_x - 5, _y, 2.5, 0, 2 * Math.PI);
-        leinwand.arc(_x, _y + 5, 2.5, 0, 2 * Math.PI);
-        leinwand.arc(_x, _y - 5, 2.5, 0, 2 * Math.PI);
-        leinwand.closePath();
-        leinwand.fillStyle = _color;
-        leinwand.fill();
-        leinwand.beginPath();
-        leinwand.arc(_x + 3.5, _y + 3.5, 2.5, 0, 2 * Math.PI);
-        leinwand.arc(_x + 3.5, _y - 3.5, 2.5, 0, 2 * Math.PI);
-        leinwand.arc(_x - 3.5, _y + 3.5, 2.5, 0, 2 * Math.PI);
-        leinwand.arc(_x - 3.5, _y - 3.5, 2.5, 0, 2 * Math.PI);
-        leinwand.closePath();
-        leinwand.fillStyle = _color;
-        leinwand.fill();
-        leinwand.beginPath();
-        leinwand.arc(_x, _y, 4, 0, 2 * Math.PI);
-        leinwand.closePath();
-        leinwand.fillStyle = "#ffff1a";
-        leinwand.fill();
     }
 }

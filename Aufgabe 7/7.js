@@ -11,6 +11,7 @@ var Blumenwiese;
 (function (Blumenwiese) {
     window.addEventListener("load", init);
     let allBees = [];
+    Blumenwiese.flowers = [];
     function init(_event) {
         let canvas;
         canvas = document.getElementsByTagName("canvas")[0];
@@ -34,7 +35,6 @@ var Blumenwiese;
         Blumenwiese.leinwand.putImageData(Blumenwiese.getImage, 0, 0);
         for (let i = 0; i < allBees.length - 1; i++) {
             allBees[i].move();
-            allBees[i].draw();
         }
         setTimeout(animateBees, 100);
     }
