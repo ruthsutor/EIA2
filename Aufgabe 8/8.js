@@ -45,6 +45,12 @@ var Blumenwiese2;
         Blumenwiese2.leinwand.putImageData(Blumenwiese2.getImage, 0, 0);
         for (let i = 0; i < Blumenwiese2.allBees.length - 1; i++) {
             Blumenwiese2.allBees[i].move(i);
+            if (Blumenwiese2.allBees[i].stopp < 12 && Blumenwiese2.allBees[i].stopp != 0) {
+                Blumenwiese2.allBees[i].stopp += 1;
+            }
+            if (Blumenwiese2.allBees[i].stopp == 11) {
+                Blumenwiese2.allBees[i].stopp = 0;
+            }
         }
         setTimeout(animateBees, 100);
     }

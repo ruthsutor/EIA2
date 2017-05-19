@@ -13,6 +13,7 @@ namespace Blumenwiese2 {
         yposition: number;
         big: boolean;
         color: string;
+        stopp: number;
         //Methoden:
         constructor() {
             let random: number = Math.round(Math.random());
@@ -31,6 +32,7 @@ namespace Blumenwiese2 {
             }
             this.xposition = 320;
             this.yposition = 115;
+            this.stopp = 0;
             this.draw();
         }
         draw(): void {
@@ -87,20 +89,23 @@ namespace Blumenwiese2 {
             }
             this.draw();
         }
+        updateinfo(_i: number): void {
+            //no info
+        }
     }
     export class Honeybee extends Beedata {
         xtarget: number;
         ytarget: number;
         gohome: boolean;
         speed: number;
-        nektar: string;
+        task: string;
         random: number;
         constructor() {
             super();
             this.setspeed();
             this.settargetflower();
             this.gohome = false;
-            this.nektar = "leer";
+            this.stopp = 0;
         }
         setspeed(): void {
             let random: number = Math.round(Math.random());
@@ -118,46 +123,49 @@ namespace Blumenwiese2 {
             this.ytarget = targetflower.yposition;
         }
         move(_i: number): void {
-            if (this.gohome == false) {
+            if (this.gohome == true && this.stopp == 0) {
                 let xDiff: number = this.xtarget - this.xposition;
                 let yDiff: number = this.ytarget - this.yposition;
                 if (Math.abs(xDiff) < 1 && Math.abs(yDiff) < 1) {
-                    this.gohome = true;
+                    this.stopp = 1;
+                    this.gohome = false;
                     this.xtarget = 320;
                     this.ytarget = 115;
-                    this.nektar = "voll";
+                    this.task = "refill nectar " + (this.stopp * 10) + "%";
                 }
                 else {
                     this.xposition += xDiff * this.speed;
                     this.yposition += yDiff * this.speed;
+                    this.task = "fly home";
                 }
             }
 
-            if (this.gohome == true) {
+            if (this.gohome == false && this.stopp == 0) {
                 let xDiff: number = this.xtarget - this.xposition;
                 let yDiff: number = this.ytarget - this.yposition;
                 if (Math.abs(xDiff) < 1 && Math.abs(yDiff) < 1) {
-                    this.gohome = false;
+                    this.stopp = 1;
+                    this.gohome = true;
                     this.settargetflower();
-                    this.nektar = "leer";
+                    this.task = "vomit " + (this.stopp * 10) + "%";
                 }
                 else {
                     this.xposition += xDiff * this.speed;
                     this.yposition += yDiff * this.speed;
+                    this.task = "fly to Flower" + String(this.random + 1);
                 }
 
             }
             this.draw();
+            //update task
+            if (this.gohome == true && this.stopp > 0) {
+                this.task = "refill nectar " + (this.stopp * 10) + "%";
+            }
+            if (this.gohome == false && this.stopp > 0) {
+                this.task = "vomit " + (this.stopp * 10) + "%";
+            }
             let beeid: string = String(_i + 1);
-            let target: string;
-            if (this.xtarget == 320 && this.ytarget == 115) {
-                target = "Home";
-            }
-            else {
-                target = "Flower" + String(this.random + 1);
-            }
-            document.getElementById(beeid).innerHTML = "Target: " + target + "  Nektar: " + this.nektar;
-
+            document.getElementById(beeid).innerHTML = this.task;
         }
     }
 }

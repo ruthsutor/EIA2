@@ -46,6 +46,12 @@ namespace Blumenwiese2 {
         leinwand.putImageData(getImage, 0, 0);
         for (let i: number = 0; i < allBees.length - 1; i++) {
             allBees[i].move(i);
+            if (allBees[i].stopp < 12 && allBees[i].stopp != 0) {
+                allBees[i].stopp += 1;
+            }
+            if (allBees[i].stopp == 11) {
+                allBees[i].stopp = 0;
+            }
         }
         setTimeout(animateBees, 100);
     }
