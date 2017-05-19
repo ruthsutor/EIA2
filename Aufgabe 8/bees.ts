@@ -100,12 +100,14 @@ namespace Blumenwiese2 {
         speed: number;
         task: string;
         random: number;
+        nectar: number;
         constructor() {
             super();
             this.setspeed();
             this.settargetflower();
             this.gohome = false;
             this.stopp = 0;
+            this.nectar = 0;
         }
         setspeed(): void {
             let random: number = Math.round(Math.random());
@@ -131,12 +133,13 @@ namespace Blumenwiese2 {
                     this.gohome = false;
                     this.xtarget = 320;
                     this.ytarget = 115;
-                    this.task = "refill nectar " + (this.stopp * 10) + "%";
+                    this.nectar = 95;
+                    this.task = "refill nectar " + this.nectar + "%";
                 }
                 else {
                     this.xposition += xDiff * this.speed;
                     this.yposition += yDiff * this.speed;
-                    this.task = "fly home";
+                    this.task = "fly home" + "  " + this.nectar + "%";
                 }
             }
 
@@ -147,22 +150,25 @@ namespace Blumenwiese2 {
                     this.stopp = 1;
                     this.gohome = true;
                     this.settargetflower();
-                    this.task = "vomit " + (this.stopp * 10) + "%";
+                    this.nectar = 5;
+                    this.task = "vomit " + this.nectar + "%";
                 }
                 else {
                     this.xposition += xDiff * this.speed;
                     this.yposition += yDiff * this.speed;
-                    this.task = "fly to Flower" + String(this.random + 1);
+                    this.task = "fly to Flower" + String(this.random + 1) + "  " + this.nectar + "%";
                 }
 
             }
             this.draw();
             //update task
             if (this.gohome == true && this.stopp > 0) {
-                this.task = "refill nectar " + (this.stopp * 10) + "%";
+                this.nectar = this.nectar + 5;
+                this.task = "refill nectar " + this.nectar + "%";
             }
             if (this.gohome == false && this.stopp > 0) {
-                this.task = "vomit " + (this.stopp * 10) + "%";
+                this.nectar = this.nectar - 5;
+                this.task = "vomit " + this.nectar + "%";
             }
             let beeid: string = String(_i + 1);
             document.getElementById(beeid).innerHTML = this.task;
