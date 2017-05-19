@@ -89,36 +89,48 @@ var Blumenwiese2;
     class Honeybee extends Beedata {
         constructor() {
             super();
-            this.speed = 0.1;
+            this.setspeed();
             this.settargetflower();
-            this.home = true;
+            this.gohome = false;
+            this.nektar = "leer";
+        }
+        setspeed() {
+            let random = Math.round(Math.random());
+            if (random == 0) {
+                this.speed = 0.1;
+            }
+            else {
+                this.speed = 0.05;
+            }
         }
         settargetflower() {
-            let random = Math.round(Math.random() * 5);
-            let targetflower = Blumenwiese2.flowers[random];
+            this.random = Math.round(Math.random() * 5);
+            let targetflower = Blumenwiese2.flowers[this.random];
             this.xtarget = targetflower.xposition;
             this.ytarget = targetflower.yposition;
         }
         move(_i) {
-            if (this.home == true) {
+            if (this.gohome == false) {
                 let xDiff = this.xtarget - this.xposition;
                 let yDiff = this.ytarget - this.yposition;
                 if (Math.abs(xDiff) < 1 && Math.abs(yDiff) < 1) {
-                    this.home = false;
+                    this.gohome = true;
                     this.xtarget = 320;
                     this.ytarget = 115;
+                    this.nektar = "voll";
                 }
                 else {
                     this.xposition += xDiff * this.speed;
                     this.yposition += yDiff * this.speed;
                 }
             }
-            if (this.home == false) {
+            if (this.gohome == true) {
                 let xDiff = this.xtarget - this.xposition;
                 let yDiff = this.ytarget - this.yposition;
                 if (Math.abs(xDiff) < 1 && Math.abs(yDiff) < 1) {
-                    this.home = true;
+                    this.gohome = false;
                     this.settargetflower();
+                    this.nektar = "leer";
                 }
                 else {
                     this.xposition += xDiff * this.speed;
@@ -127,7 +139,14 @@ var Blumenwiese2;
             }
             this.draw();
             let beeid = String(_i + 1);
-            document.getElementById(beeid).innerHTML = "Target: " + this.xtarget + "/" + this.ytarget;
+            let target;
+            if (this.xtarget == 320 && this.ytarget == 115) {
+                target = "Home";
+            }
+            else {
+                target = "Flower" + String(this.random + 1);
+            }
+            document.getElementById(beeid).innerHTML = "Target: " + target + "  Nektar: " + this.nektar;
         }
     }
     Blumenwiese2.Honeybee = Honeybee;

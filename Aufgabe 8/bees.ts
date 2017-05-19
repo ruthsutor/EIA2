@@ -91,42 +91,55 @@ namespace Blumenwiese2 {
     export class Honeybee extends Beedata {
         xtarget: number;
         ytarget: number;
-        home: boolean;
+        gohome: boolean;
         speed: number;
         nektar: string;
+        random: number;
         constructor() {
             super();
-            this.speed = 0.1;
+            this.setspeed();
             this.settargetflower();
-            this.home = true;
+            this.gohome = false;
+            this.nektar = "leer";
+        }
+        setspeed(): void {
+            let random: number = Math.round(Math.random());
+            if (random == 0) {
+                this.speed = 0.1;
+            }
+            else {
+                this.speed = 0.05;
+            }
         }
         settargetflower(): void {
-            let random: number = Math.round(Math.random() * 5);
-            let targetflower: Flowers = flowers[random];
+            this.random = Math.round(Math.random() * 5);
+            let targetflower: Flowers = flowers[this.random];
             this.xtarget = targetflower.xposition;
             this.ytarget = targetflower.yposition;
         }
         move(_i: number): void {
-            if (this.home == true) {
+            if (this.gohome == false) {
                 let xDiff: number = this.xtarget - this.xposition;
                 let yDiff: number = this.ytarget - this.yposition;
                 if (Math.abs(xDiff) < 1 && Math.abs(yDiff) < 1) {
-                    this.home = false;
+                    this.gohome = true;
                     this.xtarget = 320;
                     this.ytarget = 115;
+                    this.nektar = "voll";
                 }
                 else {
                     this.xposition += xDiff * this.speed;
                     this.yposition += yDiff * this.speed;
                 }
-
             }
-            if (this.home == false) {
+
+            if (this.gohome == true) {
                 let xDiff: number = this.xtarget - this.xposition;
                 let yDiff: number = this.ytarget - this.yposition;
                 if (Math.abs(xDiff) < 1 && Math.abs(yDiff) < 1) {
-                    this.home = true;
+                    this.gohome = false;
                     this.settargetflower();
+                    this.nektar = "leer";
                 }
                 else {
                     this.xposition += xDiff * this.speed;
@@ -136,7 +149,14 @@ namespace Blumenwiese2 {
             }
             this.draw();
             let beeid: string = String(_i + 1);
-            document.getElementById(beeid).innerHTML = "Target: " + this.xtarget + "/" + this.ytarget;
+            let target: string;
+            if (this.xtarget == 320 && this.ytarget == 115) {
+                target = "Home";
+            }
+            else {
+                target = "Flower" + String(this.random + 1);
+            }
+            document.getElementById(beeid).innerHTML = "Target: " + target + "  Nektar: " + this.nektar;
 
         }
     }
