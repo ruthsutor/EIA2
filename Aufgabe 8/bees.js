@@ -85,9 +85,6 @@ var Blumenwiese2;
             }
             this.draw();
         }
-        updateinfo(_i) {
-            //no info
-        }
     }
     Blumenwiese2.Beedata = Beedata;
     class Honeybee extends Beedata {

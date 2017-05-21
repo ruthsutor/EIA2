@@ -89,9 +89,6 @@ namespace Blumenwiese2 {
             }
             this.draw();
         }
-        updateinfo(_i: number): void {
-            //no info
-        }
     }
     export class Honeybee extends Beedata {
         xtarget: number;
