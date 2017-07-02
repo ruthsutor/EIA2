@@ -1,0 +1,16 @@
+{
+	"name" : "Database Node",
+	"version" : "0.0.1",
+	"description" : "database node",
+	"author" : "Ruth Sutor",
+	"main" : "DatabaseClient.js",
+	"scripts" : {
+		"start" : "node DatabaseClient.js"
+	},
+	"engines" : {
+		"node" : "6.10.3"
+	},
+	"dependencies" : {
+	    "mongodb": "2.2.12"
+	}
+}

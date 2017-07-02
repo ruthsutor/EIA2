@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>DatabaseClient</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="DatabaseClient.css" type="text/css" media="screen"/>
+<script src="DatabaseClient.js" type="text/javascript" charset="utf-8"></script>
+<script src="server.js" type="text/javascript" charset="utf-8"></script>
+<script src="Database.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<fieldset id="input">
+		<legend> Type student data here </legend>
+		<input type="text" name="name" placeholder="name" id="name" />
+		<input type="text" name="firstname" placeholder="firstname" id="firstname" />
+		<input type="text" name="matrikel" placeholder="matrikel" id="matrikel" />
+		<button type="button" id="insert">insert to database</button>
+	</fieldset>
+	<fieldset id="search">
+		<legend> Search </legend>
+		<input type="radio" name="searchby" checked value="martikel" id="searchbymartikel"/>
+		<label for="searchbymartikel">search by martikel</label>
+		<input type="radio" name="searchby" value="name" id="searchbyname"/>
+		<label for="searchbyname">search by name</label>
+		<input type="text" name="radio" placeholder="type martikel here" id="radio" />
+		<button type="submit" id="submit">submit</button>
+		<textarea id="text1" rows="1" cols="30"> </textarea>
+	</fieldset>
+	<fieldset id="output">
+		<legend> All student data </legend>
+		<button type="button" id="refresh">refresh</button>
+		<textarea id="text2" rows="20" cols="90"> </textarea>
+	</fieldset>
+</body>
+</html>
