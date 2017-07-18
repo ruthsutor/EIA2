@@ -16,9 +16,9 @@ function newGame(): void {
     createFields();
 }
 function createFields(): void {
-    for (let i: number = 0; i < 13; i++) {
+    for (let i: number = 0; i < 12; i++) {
         for (let u: number = 0; u < 2; u++) {
-            let source: string = "images/pair" + i;
+            let source: string = "images/pair" + i + ".jpg";
             let pairnumber: number = i;
             let field: Field = {src: source, pair: pairnumber};
             allfields.push(field);
@@ -27,7 +27,18 @@ function createFields(): void {
     placeDivs();
 }
 function placeDivs(): void {
-   console.log(allfields);
+    for (let i: number = 0; i < 24; i++) {
+        let random: number = Math.round(Math.random() * allfields.length);
+        let bigdiv: HTMLDivElement = <HTMLDivElement>document.getElementById("fielddiv");
+        let div: HTMLDivElement = document.createElement("div");
+        let img: HTMLImageElement = document.createElement("img");
+        img.src = allfields[random].src;
+        img.style.width = "50px";
+        img.style.height = "50px";
+        div.appendChild(img);
+        bigdiv.appendChild(div);
+        allfields.splice(random, 1);
+        }
 }
 interface Field {
     src: string;
