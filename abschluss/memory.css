@@ -21,7 +21,7 @@ h1{
 	height: 208px;
 	text-align: center;
 }
-#fielddiv{
+#picdiv, #background{
 	position: absolute;
 	margin-left: -156px;
 	padding-left: 50%;
@@ -33,7 +33,17 @@ canvas{
 	margin-left: -156px;
 	padding-left: 50%;
 }
-#fielddiv > div{
+#background{
+	z-index: 80;
+}
+#background > div{
+	background-color: #80aaff;
+	width: 50px;
+	height: 50px;
+	float: left;
+	border: 1px solid white;
+}
+#picdiv > div{
 	float: left;
 	height: 50px;
 	width: 50px;
