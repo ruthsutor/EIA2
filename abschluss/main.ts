@@ -61,15 +61,41 @@ function showPicture(_event: MouseEvent): void {
     if (shownpictures.length == 2) {
         checkIfPair();
     }
+    checkIfLastPair();
 }
-function checkIfPair (): void {
+function checkIfLastPair(): void {
+    let alldivs: NodeListOf<HTMLDivElement> = document.getElementsByTagName("div");
+    let alreadygone: number = 0;
+    for (let i: number = 0; i < alldivs.length; i++) {
+        if (alldivs[i].style.backgroundColor == "rgb(255, 255, 255)") {
+            alreadygone += 1;
+        }
+    }
+    console.log(alreadygone);
+    if (alreadygone == 24) {
+        setTimeout(endGame, 1000);
+    }
+}
+function endGame(): void {
+    let picdiv: HTMLDivElement = <HTMLDivElement>document.getElementById("picdiv");
+    let backgrounddiv: HTMLDivElement = <HTMLDivElement>document.getElementById("background");
+    while (picdiv.firstChild) {
+        picdiv.removeChild(picdiv.firstChild);
+    }
+    while (backgrounddiv.firstChild) {
+        backgrounddiv.removeChild(backgrounddiv.firstChild);
+    }
+    document.getElementById("start").style.visibility = "visible";
+    document.getElementById("buttondiv").style.zIndex = "100";
+}
+function checkIfPair(): void {
     let allimgs: NodeListOf<HTMLImageElement> = document.getElementsByTagName("img");
     let img1: HTMLImageElement = allimgs[shownpictures[0]];
     let img2: HTMLImageElement = allimgs[shownpictures[1]];
     if (img1.src == img2.src) {
         removePair();
-        }
     }
+}
 function removePair(): void {
     let alldivs: NodeListOf<HTMLDivElement> = document.getElementsByTagName("div");
     let div1: HTMLDivElement = alldivs[shownpictures[0] + 2];

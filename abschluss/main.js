@@ -60,6 +60,32 @@ function showPicture(_event) {
     if (shownpictures.length == 2) {
         checkIfPair();
     }
+    checkIfLastPair();
+}
+function checkIfLastPair() {
+    let alldivs = document.getElementsByTagName("div");
+    let alreadygone = 0;
+    for (let i = 0; i < alldivs.length; i++) {
+        if (alldivs[i].style.backgroundColor == "rgb(255, 255, 255)") {
+            alreadygone += 1;
+        }
+    }
+    console.log(alreadygone);
+    if (alreadygone == 24) {
+        setTimeout(endGame, 1000);
+    }
+}
+function endGame() {
+    let picdiv = document.getElementById("picdiv");
+    let backgrounddiv = document.getElementById("background");
+    while (picdiv.firstChild) {
+        picdiv.removeChild(picdiv.firstChild);
+    }
+    while (backgrounddiv.firstChild) {
+        backgrounddiv.removeChild(backgrounddiv.firstChild);
+    }
+    document.getElementById("start").style.visibility = "visible";
+    document.getElementById("buttondiv").style.zIndex = "100";
 }
 function checkIfPair() {
     let allimgs = document.getElementsByTagName("img");
