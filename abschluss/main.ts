@@ -7,6 +7,7 @@ Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. Er wurde n
 */
 
 window.addEventListener("load", init);
+let crc: CanvasRenderingContext2D;
 let allpictures: Picture[] = [];
 let allbackgrounds: HTMLDivElement[] = [];
 let shownpictures: number[] = [];
@@ -16,9 +17,11 @@ function init(): void {
 function newGame(): void {
     document.getElementById("start").style.visibility = "hidden";
     document.getElementById("buttondiv").style.zIndex = "0";
-    createPictures();
+    animation();
 }
 function createPictures(): void {
+    let canvas: HTMLCanvasElement = document.getElementsByTagName("canvas")[0];
+    canvas.style.visibility = "hidden";
     for (let i: number = 0; i < 12; i++) {
         for (let u: number = 0; u < 2; u++) {
             let source: string = "images/pair" + i + ".jpg";
@@ -71,7 +74,6 @@ function checkIfLastPair(): void {
             alreadygone += 1;
         }
     }
-    console.log(alreadygone);
     if (alreadygone == 24) {
         setTimeout(endGame, 1000);
     }
@@ -117,4 +119,32 @@ function clearShownPictures(): void {
 interface Picture {
     src: string;
     pair: number;
-} 
+}
+//CANVAS
+
+
+function animation(): void {
+    let canvas: HTMLCanvasElement;
+    canvas = document.getElementsByTagName("canvas")[0];
+    canvas.style.visibility = "visible";
+    crc = canvas.getContext("2d");
+    let r: number = 0;
+    changeRadius(r);
+}
+function changeRadius(_r: number): void {
+    _r += 20;
+    drawCircle(_r);
+    if (_r > 200) {
+        setTimeout(createPictures, 300);
+    }
+    else {
+        setTimeout(changeRadius, 50, _r);
+    }
+}
+function drawCircle(_r: number): void {
+    crc.beginPath();
+    crc.arc(156, 104, _r, 0, 2 * Math.PI);
+    crc.closePath();
+    crc.fillStyle = "#80aaff";
+    crc.fill();
+}

@@ -6,6 +6,8 @@ h1{
 	font-size: 40pt;
 }
 #start{
+	position: relative;
+	padding-top: 94px;
 	visibility: visible;
 	font-family: 'Raleway', sans-serif;
 	font-size: 15pt;

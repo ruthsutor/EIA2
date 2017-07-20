@@ -6,6 +6,7 @@ Datum: 21/07/17
 Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. Er wurde nicht kopiert und auch nicht diktiert.
 */
 window.addEventListener("load", init);
+let crc;
 let allpictures = [];
 let allbackgrounds = [];
 let shownpictures = [];
@@ -15,9 +16,11 @@ function init() {
 function newGame() {
     document.getElementById("start").style.visibility = "hidden";
     document.getElementById("buttondiv").style.zIndex = "0";
-    createPictures();
+    animation();
 }
 function createPictures() {
+    let canvas = document.getElementsByTagName("canvas")[0];
+    canvas.style.visibility = "hidden";
     for (let i = 0; i < 12; i++) {
         for (let u = 0; u < 2; u++) {
             let source = "images/pair" + i + ".jpg";
@@ -70,7 +73,6 @@ function checkIfLastPair() {
             alreadygone += 1;
         }
     }
-    console.log(alreadygone);
     if (alreadygone == 24) {
         setTimeout(endGame, 1000);
     }
@@ -112,5 +114,31 @@ function coverPictures() {
 }
 function clearShownPictures() {
     shownpictures.length = 0;
+}
+//CANVAS
+function animation() {
+    let canvas;
+    canvas = document.getElementsByTagName("canvas")[0];
+    canvas.style.visibility = "visible";
+    crc = canvas.getContext("2d");
+    let r = 0;
+    changeRadius(r);
+}
+function changeRadius(_r) {
+    _r += 20;
+    drawCircle(_r);
+    if (_r > 200) {
+        setTimeout(createPictures, 300);
+    }
+    else {
+        setTimeout(changeRadius, 50, _r);
+    }
+}
+function drawCircle(_r) {
+    crc.beginPath();
+    crc.arc(156, 104, _r, 0, 2 * Math.PI);
+    crc.closePath();
+    crc.fillStyle = "#80aaff";
+    crc.fill();
 }
 //# sourceMappingURL=main.js.map
