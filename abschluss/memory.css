@@ -12,7 +12,12 @@ h1{
 	font-family: 'Raleway', sans-serif;
 	font-size: 15pt;
 	border: none;
-	background-color: white;
+	background-color: Transparent;
+    background-repeat:no-repeat;
+	cursor:pointer;
+}
+button:active {
+	outline: none;
 }
 #buttondiv{
 	z-index: 100;
