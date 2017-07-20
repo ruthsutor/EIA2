@@ -13,7 +13,6 @@ h1{
 	font-size: 15pt;
 	border: none;
 	background-color: Transparent;
-    background-repeat:no-repeat;
 	cursor:pointer;
 }
 button:active {
