@@ -9,7 +9,7 @@ Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. Er wurde n
 window.addEventListener("load", init);
 let crc: CanvasRenderingContext2D;
 let allpictures: Picture[] = [];
-let allbackgrounds: HTMLDivElement[] = [];
+let allbackgrounds: Background[] = [];
 let shownpictures: number[] = [];
 function init(): void {
     document.getElementById("start").addEventListener("click", newGame);
@@ -17,6 +17,8 @@ function init(): void {
 function newGame(): void {
     document.getElementById("start").style.visibility = "hidden";
     document.getElementById("buttondiv").style.zIndex = "0";
+    let canvas: HTMLCanvasElement = document.getElementsByTagName("canvas")[0];
+    canvas.style.visibility = "visible";
     animation();
 }
 function createPictures(): void {
@@ -28,12 +30,14 @@ function createPictures(): void {
             allpictures.push(pic);
         }
     }
-    placeDivs();
+    placePics();
 }
-function placeDivs(): void {
+function placePics(): void {
     for (let i: number = 0; i < 24; i++) {
         let random: number = Math.round(Math.random() * (allpictures.length - 1) + 0);
         allpictures[random].place(random, i);
+        let div: Background = new Background(i);
+        allbackgrounds.push(div);
     }
 }
 function showPicture(_event: MouseEvent): void {
@@ -130,7 +134,7 @@ function drawCircle(_r: number): void {
     crc.fill();
 }
 
-//CLASS PICTURE
+//CLASSES
 
 class Picture {
     src: string;
@@ -139,19 +143,31 @@ class Picture {
     }
     place(_random: number, _i: number): void {
         let picdiv: HTMLDivElement = <HTMLDivElement>document.getElementById("picdiv");
-        let backgrounddiv: HTMLDivElement = <HTMLDivElement>document.getElementById("background");
+
         let div: HTMLDivElement = document.createElement("div");
-        let background: HTMLDivElement = document.createElement("div");
+
         let img: HTMLImageElement = document.createElement("img");
         img.src = this.src;
         img.style.width = "50px";
         img.style.height = "50px";
         div.appendChild(img);
         picdiv.appendChild(div);
-        background.id = String(_i);
-        background.addEventListener("click", showPicture);
-        backgrounddiv.appendChild(background);
-        allbackgrounds.push(backgrounddiv);
+
         allpictures.splice(_random, 1);
     }
+}
+class Background {
+    id: string;
+    constructor(_i: number) {
+        this.id = String(_i);
+        this.place();
+    }
+    place(): void {
+        let backgrounddiv: HTMLDivElement = <HTMLDivElement>document.getElementById("background");
+        let background: HTMLDivElement = document.createElement("div");
+        background.addEventListener("click", showPicture);
+        background.id = this.id;
+        backgrounddiv.appendChild(background);
+    }
+
 }

@@ -16,6 +16,8 @@ function init() {
 function newGame() {
     document.getElementById("start").style.visibility = "hidden";
     document.getElementById("buttondiv").style.zIndex = "0";
+    let canvas = document.getElementsByTagName("canvas")[0];
+    canvas.style.visibility = "visible";
     animation();
 }
 function createPictures() {
@@ -27,12 +29,14 @@ function createPictures() {
             allpictures.push(pic);
         }
     }
-    placeDivs();
+    placePics();
 }
-function placeDivs() {
+function placePics() {
     for (let i = 0; i < 24; i++) {
         let random = Math.round(Math.random() * (allpictures.length - 1) + 0);
         allpictures[random].place(random, i);
+        let div = new Background(i);
+        allbackgrounds.push(div);
     }
 }
 function showPicture(_event) {
@@ -125,27 +129,34 @@ function drawCircle(_r) {
     crc.fillStyle = "#80aaff";
     crc.fill();
 }
-//CLASS PICTURE
+//CLASSES
 class Picture {
     constructor(_i) {
         this.src = "images/pair" + _i + ".jpg";
     }
     place(_random, _i) {
         let picdiv = document.getElementById("picdiv");
-        let backgrounddiv = document.getElementById("background");
         let div = document.createElement("div");
-        let background = document.createElement("div");
         let img = document.createElement("img");
         img.src = this.src;
         img.style.width = "50px";
         img.style.height = "50px";
         div.appendChild(img);
         picdiv.appendChild(div);
-        background.id = String(_i);
-        background.addEventListener("click", showPicture);
-        backgrounddiv.appendChild(background);
-        allbackgrounds.push(backgrounddiv);
         allpictures.splice(_random, 1);
+    }
+}
+class Background {
+    constructor(_i) {
+        this.id = String(_i);
+        this.place();
+    }
+    place() {
+        let backgrounddiv = document.getElementById("background");
+        let background = document.createElement("div");
+        background.addEventListener("click", showPicture);
+        background.id = this.id;
+        backgrounddiv.appendChild(background);
     }
 }
 //# sourceMappingURL=main.js.map
