@@ -113,6 +113,7 @@ function animation(): void {
     canvas = document.getElementsByTagName("canvas")[0];
     canvas.style.visibility = "visible";
     crc = canvas.getContext("2d");
+    drawWhiteBack();
     let r: number = 0;
     changeRadius(r);
 }
@@ -132,6 +133,10 @@ function drawCircle(_r: number): void {
     crc.closePath();
     crc.fillStyle = "#80aaff";
     crc.fill();
+}
+function drawWhiteBack(): void {
+    crc.fillStyle = "#ffffff";
+    crc.fillRect(0, 0, 312, 208);
 }
 
 //CLASSES

@@ -109,6 +109,7 @@ function animation() {
     canvas = document.getElementsByTagName("canvas")[0];
     canvas.style.visibility = "visible";
     crc = canvas.getContext("2d");
+    drawWhiteBack();
     let r = 0;
     changeRadius(r);
 }
@@ -128,6 +129,10 @@ function drawCircle(_r) {
     crc.closePath();
     crc.fillStyle = "#80aaff";
     crc.fill();
+}
+function drawWhiteBack() {
+    crc.fillStyle = "#ffffff";
+    crc.fillRect(0, 0, 312, 208);
 }
 //CLASSES
 class Picture {
