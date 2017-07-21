@@ -23,9 +23,7 @@ function createPictures() {
     canvas.style.visibility = "hidden";
     for (let i = 0; i < 12; i++) {
         for (let u = 0; u < 2; u++) {
-            let source = "images/pair" + i + ".jpg";
-            let pairnumber = i;
-            let pic = { src: source, pair: pairnumber };
+            let pic = new Picture(i);
             allpictures.push(pic);
         }
     }
@@ -34,21 +32,7 @@ function createPictures() {
 function placeDivs() {
     for (let i = 0; i < 24; i++) {
         let random = Math.round(Math.random() * (allpictures.length - 1) + 0);
-        let picdiv = document.getElementById("picdiv");
-        let backgrounddiv = document.getElementById("background");
-        let div = document.createElement("div");
-        let background = document.createElement("div");
-        let img = document.createElement("img");
-        img.src = allpictures[random].src;
-        img.style.width = "50px";
-        img.style.height = "50px";
-        div.appendChild(img);
-        picdiv.appendChild(div);
-        background.id = String(i);
-        background.addEventListener("click", showPicture);
-        backgrounddiv.appendChild(background);
-        allbackgrounds.push(backgrounddiv);
-        allpictures.splice(random, 1);
+        allpictures[random].place(random, i);
     }
 }
 function showPicture(_event) {
@@ -140,5 +124,28 @@ function drawCircle(_r) {
     crc.closePath();
     crc.fillStyle = "#80aaff";
     crc.fill();
+}
+//CLASS PICTURE
+class Picture {
+    constructor(_i) {
+        this.src = "images/pair" + _i + ".jpg";
+    }
+    place(_random, _i) {
+        let picdiv = document.getElementById("picdiv");
+        let backgrounddiv = document.getElementById("background");
+        let div = document.createElement("div");
+        let background = document.createElement("div");
+        let img = document.createElement("img");
+        img.src = this.src;
+        img.style.width = "50px";
+        img.style.height = "50px";
+        div.appendChild(img);
+        picdiv.appendChild(div);
+        background.id = String(_i);
+        background.addEventListener("click", showPicture);
+        backgrounddiv.appendChild(background);
+        allbackgrounds.push(backgrounddiv);
+        allpictures.splice(_random, 1);
+    }
 }
 //# sourceMappingURL=main.js.map

@@ -24,9 +24,7 @@ function createPictures(): void {
     canvas.style.visibility = "hidden";
     for (let i: number = 0; i < 12; i++) {
         for (let u: number = 0; u < 2; u++) {
-            let source: string = "images/pair" + i + ".jpg";
-            let pairnumber: number = i;
-            let pic: Picture = { src: source, pair: pairnumber };
+            let pic: Picture = new Picture(i);
             allpictures.push(pic);
         }
     }
@@ -35,21 +33,7 @@ function createPictures(): void {
 function placeDivs(): void {
     for (let i: number = 0; i < 24; i++) {
         let random: number = Math.round(Math.random() * (allpictures.length - 1) + 0);
-        let picdiv: HTMLDivElement = <HTMLDivElement>document.getElementById("picdiv");
-        let backgrounddiv: HTMLDivElement = <HTMLDivElement>document.getElementById("background");
-        let div: HTMLDivElement = document.createElement("div");
-        let background: HTMLDivElement = document.createElement("div");
-        let img: HTMLImageElement = document.createElement("img");
-        img.src = allpictures[random].src;
-        img.style.width = "50px";
-        img.style.height = "50px";
-        div.appendChild(img);
-        picdiv.appendChild(div);
-        background.id = String(i);
-        background.addEventListener("click", showPicture);
-        backgrounddiv.appendChild(background);
-        allbackgrounds.push(backgrounddiv);
-        allpictures.splice(random, 1);
+        allpictures[random].place(random, i);
     }
 }
 function showPicture(_event: MouseEvent): void {
@@ -116,10 +100,7 @@ function coverPictures(): void {
 function clearShownPictures(): void {
     shownpictures.length = 0;
 }
-interface Picture {
-    src: string;
-    pair: number;
-}
+
 //CANVAS
 
 
@@ -147,4 +128,30 @@ function drawCircle(_r: number): void {
     crc.closePath();
     crc.fillStyle = "#80aaff";
     crc.fill();
+}
+
+//CLASS PICTURE
+
+class Picture {
+    src: string;
+    constructor(_i: number) {
+        this.src = "images/pair" + _i + ".jpg";
+    }
+    place(_random: number, _i: number): void {
+        let picdiv: HTMLDivElement = <HTMLDivElement>document.getElementById("picdiv");
+        let backgrounddiv: HTMLDivElement = <HTMLDivElement>document.getElementById("background");
+        let div: HTMLDivElement = document.createElement("div");
+        let background: HTMLDivElement = document.createElement("div");
+        let img: HTMLImageElement = document.createElement("img");
+        img.src = this.src;
+        img.style.width = "50px";
+        img.style.height = "50px";
+        div.appendChild(img);
+        picdiv.appendChild(div);
+        background.id = String(_i);
+        background.addEventListener("click", showPicture);
+        backgrounddiv.appendChild(background);
+        allbackgrounds.push(backgrounddiv);
+        allpictures.splice(_random, 1);
+    }
 }
